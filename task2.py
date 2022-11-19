@@ -1,4 +1,6 @@
 import codecs
+import csv
+import os
 
 
 def d_copy(path_old: str, path_new: str, count_good: int, count_bad: int):
@@ -18,5 +20,26 @@ def d_copy(path_old: str, path_new: str, count_good: int, count_bad: int):
         f.close()
 
 
+def ann(directory: str):
+    name = ""
+    columns = ("Path1", "Path2", "Class")
+    with open("data1.csv", "w") as file:
+        writer = csv.writer(file, delimiter=";")
+        writer.writerow(columns)
+        for filename in os.listdir(directory):
+            f = os.path.join(directory, filename)
+            if os.path.isfile(f) and filename.endswith('.txt'):
+                name = f[-12] + f[-11] + f[-10]
+                if name == 'bad':
+                    cont = (f, 'dataset1/' + name + '_' + f[-8] + f[-7] + f[-6] + f[-5], name)
+                    writer.writerow(cont)
+                else:
+                    name = f[-13] + f[-12] + f[-11] + f[-10]
+                    cont = (f, "dataset1/" + name + '_' + f[-8] + f[-7] + f[-6] + f[-5], name)
+                    writer.writerow(cont)
+
+
 if __name__ == "__main__":
-    d_copy("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset", "C:/Users/Андрей/Desktop/tst", 849, 808)
+    d_copy("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset",
+           "C:/Users/Андрей/PycharmProjects/pythonProject8/dataset1", 849, 808)
+    ann("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset1")
