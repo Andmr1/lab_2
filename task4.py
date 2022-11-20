@@ -6,7 +6,7 @@ counter = 0
 
 def fnd(cls: str) -> str:
     path = "C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/" + cls + "/" + str(counter).zfill(4) + ".txt"
-    if os.path.isfile(path) and path.endswith('.txt'):
+    if os.path.isfile(path):
         return path
     else:
         return None
