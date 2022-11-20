@@ -42,4 +42,4 @@ def ann(directory: str):
 if __name__ == "__main__":
     d_copy("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset",
            "C:/Users/Андрей/PycharmProjects/pythonProject8/dataset1", 849, 808)
-    ann("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset1")
+    ann("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset")

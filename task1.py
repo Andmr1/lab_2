@@ -2,18 +2,25 @@ import csv
 import os
 
 
-def annotation(path: str, count_good: int, count_bad: int):
+def ann(directory: str):
+    name = ""
     columns = ("Path1", "Path2", "Class")
     with open("data.csv", "w") as file:
         writer = csv.writer(file, delimiter=";")
         writer.writerow(columns)
-        for i in range(count_good + 1):
-            cont = (path + "/good" + str(i).zfill(4) + ".txt", "dataset/good" + str(i).zfill(4) + ".txt", "good")
-            writer.writerow(cont)
-        for i in range(count_bad + 1):
-            cont = (path + "/bad" + str(i).zfill(4) + ".txt", "dataset/bad" + str(i).zfill(4) + ".txt", "bad")
-            writer.writerow(cont)
+        for filename in os.listdir(directory):
+            f = os.path.join(directory, filename)
+            if os.path.isfile(f) and filename.endswith('.txt'):
+                name = f[-12] + f[-11] + f[-10]
+                if name == 'bad':
+                    cont = (f, 'dataset/' + name + '/' + f[-8] + f[-7] + f[-6] + f[-5], name)
+                    writer.writerow(cont)
+                else:
+                    name = f[-13] + f[-12] + f[-11] + f[-10]
+                    cont = (f, "dataset/" + name + '/' + f[-8] + f[-7] + f[-6] + f[-5], name)
+                    writer.writerow(cont)
 
 
 if __name__ == "__main__":
-    annotation("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset", 849, 849)
+    ann("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/good")
+    ann("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/bad")
