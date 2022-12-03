@@ -4,6 +4,7 @@ from task1 import create_main_ann
 from task2 import copy_to_new_directory
 from task2 import create_new_dir_ann
 from task3 import copy_to_new_dir_with_random_naming
+from task5 import MyIter
 
 
 class UiMainWindow(QtWidgets.QMainWindow):
@@ -12,6 +13,8 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.path1 = ""
         self.path2 = ""
         self.path3 = ""
+        self.it_good = MyIter("good")
+        self.it_bad = MyIter("bad")
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(537, 714)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -89,22 +92,31 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.func2.clicked.connect(self.copy_directory_to_one_folder)
         self.func3.clicked.connect(self.create_ann_for_second_dir)
         self.func5.clicked.connect(self.create_random_named_dataset)
+        self.func4.clicked.connect(self.show_next)
+        self.Reviewtype.addItems(["good", "bad"])
 
     def retranslate_ui(self):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "you"))
-        self.label.setToolTip(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Main dataset path</span></p></body></html>"))
+        self.label.setToolTip(_translate("MainWindow",
+                                         "<html><head/><body><p align=\"center\"><span style=\""
+                                         "font-size:12pt; font-weight:600;"
+                                         "\">Main dataset path</span></p></body></html>"))
         self.label.setText(_translate("MainWindow", "Main dataset path"))
-        self.save_button.setToolTip(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Save main dataset path</span></p></body></html>"))
+        self.save_button.setToolTip(_translate("MainWindow", "<html><head/><body><p><span style=\""
+                                               " font-weight:600;\">Save main dataset path</span></p></body></html>"))
         self.save_button.setText(_translate("MainWindow", "Save path"))
-        self.label_2.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Dataset organisation</span></p></body></html>"))
+        self.label_2.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\""
+                                        " font-size:12pt;\">Dataset organisation</span></p></body></html>"))
         self.func1.setText(_translate("MainWindow", "Create main dataset annotation"))
         self.func2.setText(_translate("MainWindow", "Moove main dataset"))
         self.func3.setText(_translate("MainWindow", "Create annotation for mooved dataset"))
         self.func4.setText(_translate("MainWindow", "Next"))
         self.func5.setText(_translate("MainWindow", "Create dataset with random file names and it\'s annotation"))
-        self.Path.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Review path</span></p></body></html>"))
-        self.label_3.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">Iteration</span></p></body></html>"))
+        self.Path.setText(_translate("MainWindow", "<html><head/><body><p align=\""
+                                     "сenter\"><span style=\" font-size:10pt;\">Review path</span></p></body></html>"))
+        self.label_3.setText(_translate("MainWindow", "<html><head/><body><p><span style=\""
+                                        "font-size:12pt;\">Iteration</span></p></body></html>"))
 
     def save(self):
         self.path1 = self.lineEdit.text()
@@ -129,6 +141,12 @@ class UiMainWindow(QtWidgets.QMainWindow):
             self.path3 = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Folder')
             copy_to_new_dir_with_random_naming(self.path1, self.path3)
             print("Done!")
+
+    def show_next(self):
+        if self.Reviewtype.currentText() == "good":
+            self.Path.setText(self.it_good.__next__())
+        else:
+            self.Path.setText(self.it_bad.__next__())
 
 
 if __name__ == "__main__":
