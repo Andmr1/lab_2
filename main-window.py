@@ -1,11 +1,17 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from task1 import create_main_ann
+from task2 import copy_to_new_directory
+from task2 import create_new_dir_ann
+from task3 import copy_to_new_dir_with_random_naming
 
 
 class UiMainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(UiMainWindow, self).__init__()
+        self.path1 = ""
+        self.path2 = ""
+        self.path3 = ""
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(537, 714)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -78,6 +84,11 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
         self.retranslate_ui()
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.save_button.clicked.connect(self.save)
+        self.func1.clicked.connect(self.create_annotation_1)
+        self.func2.clicked.connect(self.copy_directory_to_one_folder)
+        self.func3.clicked.connect(self.create_ann_for_second_dir)
+        self.func5.clicked.connect(self.create_random_named_dataset)
 
     def retranslate_ui(self):
         _translate = QtCore.QCoreApplication.translate
@@ -92,10 +103,32 @@ class UiMainWindow(QtWidgets.QMainWindow):
         self.func3.setText(_translate("MainWindow", "Create annotation for mooved dataset"))
         self.func4.setText(_translate("MainWindow", "Next"))
         self.func5.setText(_translate("MainWindow", "Create dataset with random file names and it\'s annotation"))
-        self.Path.setText(_translate("MainWindow",
-                                     "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Review path</span></p></body></html>"))
-        self.label_3.setText(_translate("MainWindow",
-                                        "<html><head/><body><p><span style=\" font-size:12pt;\">Iteration</span></p></body></html>"))
+        self.Path.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Review path</span></p></body></html>"))
+        self.label_3.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">Iteration</span></p></body></html>"))
+
+    def save(self):
+        self.path1 = self.lineEdit.text()
+
+    def create_annotation_1(self):
+        if self.path1 != "":
+            create_main_ann(self.path1)
+
+    def copy_directory_to_one_folder(self):
+        self.path2 = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Folder')
+        if self.path1 != "" and self.path2 != "":
+            copy_to_new_directory(self.path1 + "/good", self.path2)
+            copy_to_new_directory(self.path1 + "/bad", self.path2)
+
+    def create_ann_for_second_dir(self):
+        self.path2 = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Folder')
+        if self.path2 != "":
+            create_new_dir_ann(self.path2)
+
+    def create_random_named_dataset(self):
+        if self.path1 != "":
+            self.path3 = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Folder')
+            copy_to_new_dir_with_random_naming(self.path1, self.path3)
+            print("Done!")
 
 
 if __name__ == "__main__":

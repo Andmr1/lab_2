@@ -14,17 +14,20 @@ def create_main_ann(directory: str):
         writer.writerow(columns)
         for filename in os.listdir(directory):
             f = os.path.join(directory, filename)
-            if os.path.isfile(f) and filename.endswith('.txt'):
-                name = f[-12] + f[-11] + f[-10]
-                if name == 'bad':
-                    cont = (f, 'dataset/' + name + '/' + f[-8] + f[-7] + f[-6] + f[-5], name)
-                    writer.writerow(cont)
-                else:
-                    name = f[-13] + f[-12] + f[-11] + f[-10]
-                    cont = (f, "dataset/" + name + '/' + f[-8] + f[-7] + f[-6] + f[-5], name)
-                    writer.writerow(cont)
+            for fln in os.listdir(f):
+                fl = os.path.join(f, fln)
+                if os.path.isfile(fl) and fl.endswith(".txt"):
+                    name = fl[-12] + fl[-11] + fl[-10]
+                    if name == 'bad':
+                        cont = (fl, name + "/" + fl[-8] + fl[-7] + fl[-6] + fl[-5], name)
+                        writer.writerow(cont)
+                    else:
+                        name = fl[-13] + fl[-12] + fl[-11] + fl[-10]
+                        cont = (fl, name + '/' + fl[-8] + fl[-7] + fl[-6] + fl[-5], name)
+                        writer.writerow(cont)
 
 
 if __name__ == "__main__":
-    create_main_ann("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/good")
-    create_main_ann("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/bad")
+    create_main_ann("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset")
+
+
