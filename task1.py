@@ -2,7 +2,7 @@ import csv
 import os
 
 
-def ann(directory: str):
+def create_main_ann(directory: str):
     """
     Функция создания файла-аннотации для изначального датасета. Принимает на вход абсолютный путь к одной из папок
     изначального датасета и, пробегая по всем файлам составляет аннотацию.
@@ -26,5 +26,5 @@ def ann(directory: str):
 
 
 if __name__ == "__main__":
-    ann("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/good")
-    ann("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/bad")
+    create_main_ann("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/good")
+    create_main_ann("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/bad")

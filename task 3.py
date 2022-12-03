@@ -4,7 +4,7 @@ import os
 from random import randint
 
 
-def rand_cpy(path: str, path_new: str):
+def copy_to_new_dir_with_random_naming(path: str, path_new: str):
     """
     Функция копирования исходного датасета в новую директорию с присваиванием случайного номера.
     Также, чтобы не потерять метку класса, создаёт файл-аннотацию для нового датасета.
@@ -36,7 +36,7 @@ def rand_cpy(path: str, path_new: str):
 
 
 if __name__ == '__main__':
-    rand_cpy("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/good",
-             "C:/Users/Андрей/PycharmProjects/pythonProject8/dataset3")
-    rand_cpy("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/bad",
-             "C:/Users/Андрей/PycharmProjects/pythonProject8/dataset3")
+    copy_to_new_dir_with_random_naming("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/good",
+                                       "C:/Users/Андрей/PycharmProjects/pythonProject8/dataset3")
+    copy_to_new_dir_with_random_naming("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/bad",
+                                       "C:/Users/Андрей/PycharmProjects/pythonProject8/dataset3")

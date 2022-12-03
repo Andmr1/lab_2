@@ -3,7 +3,7 @@ import csv
 import os
 
 
-def d_new(path_old: str, path_new: str):
+def copy_to_new_directory(path_old: str, path_new: str):
     """
     Функция копирования исходного датасета в другую директорию. Принимает на вход старый и новый путь к текстовым
      файлам. Пробегая по каждому, осуществляет копирование.
@@ -23,7 +23,7 @@ def d_new(path_old: str, path_new: str):
             file.close()
 
 
-def ann(directory: str):
+def create_new_dir_ann(directory: str):
     """
     Функция создания аннотации для нового датасета. Принимает на вход путь и, пробегая по файлам, заполняет таблицу.
     Метка класса берётся из названия файла.
@@ -47,8 +47,8 @@ def ann(directory: str):
 
 
 if __name__ == "__main__":
-    d_new("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/good",
-          "C:/Users/Андрей/PycharmProjects/pythonProject8/dataset1")
-    d_new("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/bad",
-          "C:/Users/Андрей/PycharmProjects/pythonProject8/dataset1")
-    ann("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset1")
+    copy_to_new_directory("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/good",
+                          "C:/Users/Андрей/PycharmProjects/pythonProject8/dataset1")
+    copy_to_new_directory("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset/bad",
+                          "C:/Users/Андрей/PycharmProjects/pythonProject8/dataset1")
+    create_new_dir_ann("C:/Users/Андрей/PycharmProjects/pythonProject8/dataset1")
