@@ -1,10 +1,12 @@
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 from task1 import create_main_ann
 from task2 import copy_to_new_directory
 from task2 import create_new_dir_ann
 from task3 import copy_to_new_dir_with_random_naming
 from task5 import MyIter
+
+editorProgram = 'notepad'
 
 
 class UiMainWindow(QtWidgets.QMainWindow):
@@ -144,9 +146,22 @@ class UiMainWindow(QtWidgets.QMainWindow):
 
     def show_next(self):
         if self.Reviewtype.currentText() == "good":
-            self.Path.setText(self.it_good.__next__())
+            rev_path = self.it_good.__next__()
+            self.Path.setText(rev_path)
+            if rev_path != "None":
+                process = QtCore.QProcess(self)
+                process.start(editorProgram, [rev_path])
+                self.setEnabled(False)
+                process.finished.connect(lambda: self.setEnabled(True))
+
         else:
-            self.Path.setText(self.it_bad.__next__())
+            rev_path = self.it_bad.__next__()
+            self.Path.setText(rev_path)
+            if rev_path != "None":
+                process = QtCore.QProcess(self)
+                process.start(editorProgram, [rev_path])
+                self.setEnabled(False)
+                process.finished.connect(lambda: self.setEnabled(True))
 
 
 if __name__ == "__main__":
