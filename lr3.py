@@ -1,6 +1,27 @@
+import re
+
 import pandas as pd
 import codecs
 from task5 import MyIter
+import nltk
+import matplotlib
+import matplotlib.pyplot as plt
+from nltk.stem import WordNetLemmatizer
+from pymorphy2 import MorphAnalyzer
+from nltk.corpus import stopwords
+from pymystem3 import Mystem
+
+
+def create_hist(df: pd, mark: str):
+    df_n = filter_by_mark(df, mark)
+    lemmatizer = Mystem()
+    text = df_n["rev_text"]
+    text = list(text)
+    for sent in text:
+        sent_lemmas = lemmatizer.lemmatize(sent)
+        print(sent_lemmas)
+
+
 
 
 def filter_by_mark(df: pd, mark: str) -> pd:
@@ -42,12 +63,6 @@ def read_all_data() -> pd:
 
 
 if __name__ == '__main__':
-   good_max = 0
-   good_min = 0
-   good_avg = 0
-   bad_max = 0
-   bad_min = 0
-   bad_avg = 0
    data1 = read_all_data()
    print(data1)
    print(data1.isnull().sum())
@@ -67,3 +82,4 @@ if __name__ == '__main__':
    print("maximum:", bad_max)
    print("minimum:", bad_min)
    print("average:", bad_avg)
+   create_hist(data1, "good")
