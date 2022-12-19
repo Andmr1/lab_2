@@ -1,5 +1,4 @@
 import re
-
 import pandas as pd
 import codecs
 from task5 import MyIter
@@ -12,7 +11,8 @@ from nltk.corpus import stopwords
 from pymystem3 import Mystem
 
 
-def create_hist(df: pd, mark: str):
+def create_hist(df: pd, mark: str, ing: str):
+    words = {}
     df_n = filter_by_mark(df, mark)
     lemmatizer = Mystem()
     text = df_n["rev_text"]
@@ -20,6 +20,18 @@ def create_hist(df: pd, mark: str):
     for sent in text:
         sent_lemmas = lemmatizer.lemmatize(sent)
         print(sent_lemmas)
+        for word in sent_lemmas:
+            if word not in words and (len(word) >= 3 or word == "я"):
+                words[word] = 1
+            if word in words:
+                words[word] += 1
+        print(words)
+    f = codecs.open(u'' + "new" + ing + ".txt", "a", "utf-8")
+    for word in words:
+        f.write(word + ": " + str(words[word]))
+    f.close()
+
+
 
 
 
@@ -63,6 +75,7 @@ def read_all_data() -> pd:
 
 
 if __name__ == '__main__':
+   m = 0
    data1 = read_all_data()
    print(data1)
    print(data1.isnull().sum())
@@ -82,4 +95,5 @@ if __name__ == '__main__':
    print("maximum:", bad_max)
    print("minimum:", bad_min)
    print("average:", bad_avg)
-   create_hist(data1, "good")
+   create_hist(data1, "good", "1")
+   create_hist(data1, "bad", "2")
