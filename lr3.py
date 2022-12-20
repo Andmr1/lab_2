@@ -1,17 +1,47 @@
-import re
 import pandas as pd
 import codecs
 from task5 import MyIter
-import nltk
 import matplotlib
 import matplotlib.pyplot as plt
-from nltk.stem import WordNetLemmatizer
-from pymorphy2 import MorphAnalyzer
-from nltk.corpus import stopwords
 from pymystem3 import Mystem
+import numpy as np
 
 
-def create_hist(df: pd, mark: str, ing: str):
+def create_hist(mark: str) -> plt:
+    '''
+     Функция считывает использование слов в обзорах и возвращает столбичную диаграмму
+    '''
+    keys = []
+    vals = []
+    if mark == "good":
+        fl = codecs.open("new1.txt", "r", "utf-8")
+        for i in fl.readlines():
+            key, val = i.strip().split(":")
+            val = int(val)
+            if val > 800:
+                keys.append(key)
+                vals.append(val)
+    else:
+        fl = codecs.open("new2.txt", "r", "utf-8")
+        for i in fl.readlines():
+            key, val = i.strip().split(":")
+            keys.append(key)
+            vals.append(val)
+    position = np.arange(len(vals))
+    fig, ax = plt.subplots()
+    ax.bar(position, vals)
+    ax.set_xticks(position)
+    ax.set_xticklabels(keys)
+    fig.set_figwidth(1000)
+    fig.set_figheight(1000)
+    return fig
+
+
+def lemmatize_and_count(df: pd, mark: str, ing: str):
+    '''
+    Функция производит токенизацию и лемматизацию обзоров из датафрейма по заданной метке и записывает полученную
+    информацию в файл
+    '''
     words = {}
     df_n = filter_by_mark(df, mark)
     lemmatizer = Mystem()
@@ -28,12 +58,8 @@ def create_hist(df: pd, mark: str, ing: str):
         print(words)
     f = codecs.open(u'' + "new" + ing + ".txt", "a", "utf-8")
     for word in words:
-        f.write(word + ": " + str(words[word]))
+        f.write(word + ": " + str(words[word] + "\n"))
     f.close()
-
-
-
-
 
 
 def filter_by_mark(df: pd, mark: str) -> pd:
@@ -45,6 +71,9 @@ def filter_by_number(df: pd, w_num: int) -> pd:
 
 
 def read_all_data() -> pd:
+    '''
+    С использованием класса итератора из предыдущей работы записывает обзоры в датафрейм.
+    '''
     rev_types = []
     rev_text = []
     word_num = []
@@ -95,5 +124,5 @@ if __name__ == '__main__':
    print("maximum:", bad_max)
    print("minimum:", bad_min)
    print("average:", bad_avg)
-   create_hist(data1, "good", "1")
-   create_hist(data1, "bad", "2")
+   fig = create_hist(data_good, "good")
+   plt.show()
